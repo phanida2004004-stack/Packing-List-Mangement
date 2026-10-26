@@ -1,0 +1,8 @@
+{
+  "name": "pl-brand-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Packing list, work order and QC tracking application",
+  "scripts": {"start": "node server.js"},
+  "dependencies": {"express": "^5.1.0", "multer": "^2.0.2", "pdf-parse": "^2.4.5"}
+}
