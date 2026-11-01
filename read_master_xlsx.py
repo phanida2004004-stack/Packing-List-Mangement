@@ -62,8 +62,13 @@ with zipfile.ZipFile(path) as book:
         rows = []
         for row in root.findall(".//main:sheetData/main:row", ns):
             cells = {}
+            next_col = 0
             for cell in row.findall("main:c", ns):
-                cells[col_index(cell.attrib.get("r", ""))] = cell_value(cell, shared)
+                # Some SAP exports omit the cell reference; those cells follow the previous one.
+                ref = cell.attrib.get("r", "")
+                index = col_index(ref) if re.match(r"[A-Z]+", ref) else next_col
+                cells[index] = cell_value(cell, shared)
+                next_col = index + 1
             if cells:
                 rows.append([cells.get(i, "") for i in range(max(cells) + 1)])
             else:
